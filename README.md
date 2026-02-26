@@ -1,7 +1,5 @@
 # Chat Privado
 
----
-
 ## Sumário
 
 - [Visão geral](#visão-geral)
