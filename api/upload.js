@@ -39,8 +39,15 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: "Nenhum arquivo enviado" });
       }
 
-      const fileName =
-        fields.fileName || `${Date.now()}-${file.originalFilename}`;
+let fileName = fields.fileName;
+
+if (Array.isArray(fileName)) {
+  fileName = fileName[0];
+}
+
+if (!fileName) {
+  fileName = `${Date.now()}-${file.originalFilename}`;
+}
 
       const fileData = fs.readFileSync(file.filepath);
 
