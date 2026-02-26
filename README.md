@@ -302,4 +302,4 @@ vercel dev
 
 ## Créditos
 
-Projeto e ideias feitos originalmente por **fragass**.
+Projeto feito por **fragass**.
