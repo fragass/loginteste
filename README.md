@@ -1,7 +1,7 @@
 # Workday CNX Chat
 
 
-Projeto e ideias feito originalmente por **fragass**.
+Projeto e ideias feitos originalmente por **fragass**.
 
 
 > Chat interno web com login, presença online e envio de imagens por Ctrl+V.
