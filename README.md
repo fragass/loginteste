@@ -18,6 +18,7 @@
 - [Como rodar](#como-rodar)
 - [Segurança e limitações atuais](#segurança-e-limitações-atuais)
 - [Roadmap sugerido](#roadmap-sugerido)
+- [Créditos](#Créditos)
 
 ---
 
@@ -298,5 +299,7 @@ vercel dev
 - Renomear arquivo principal do chat para nome semântico.
 
 ---
+
+## Créditos
 
 Projeto e ideias feitos originalmente por **fragass**.
