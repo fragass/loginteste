@@ -246,24 +246,15 @@ button.send-btn:hover { background: #2ea043; transform: translateY(-1px); }
     font-weight: 700;
 }
 .message.whisper {
-    background: #2a2f3a;            /* dark suave, levemente diferente das msgs normais */
-    border: 1px dashed #d29922;     /* borda sutil dourada */
-    color: #e6e8ec;                 /* texto claro, não branco puro */
+    background: #2a2538;                 /* roxo bem escuro */
+    border: 1px solid #6f42c1;           /* roxo elegante */
+    color: #e5def5;                      /* texto claro suave */
     font-style: italic;
-    position: relative;
-    box-shadow: inset 0 0 0 1px rgba(210,153,34,0.15);
+    box-shadow: 0 0 0 1px rgba(111,66,193,0.15);
 }
 
-/* se quiser manter um "indicador" visual discreto */
-.message.whisper::before {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    font-size: 10px;
-    color: #d29922;
-    opacity: 0.75;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.message.whisper:hover {
+    background: #332d46;
 }
 
 /* Overlay de notificação */
@@ -590,6 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
