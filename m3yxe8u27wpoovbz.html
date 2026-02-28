@@ -301,7 +301,7 @@ button.send-btn:hover { background: #2ea043; transform: translateY(-1px); }
 
     <div class="container">
         <div class="header">
-            <span class="warning-text">Para sussurar use: /s @nome mensagem </span>
+            <!-- <span class="warning-text">Mensagens com 24 horas de envio serão apagadas todos os dias à meia-noite.</span> -->
             <a href="https://6bh1xntg0kegg8kp.vercel.app/" class="admin-link">🔒</a>
         </div>
         <div class="messages" id="messages"></div>
@@ -420,7 +420,9 @@ function parseWhisper(text) {
 }
 
 /* MENSAGENS */
-async function loadMessages() {
+async function loadMessages(options = {}) {
+    const { forceScrollBottom = false } = options;
+
     try {
         const res = await fetch('/api/messages');
         const data = await res.json();
@@ -441,6 +443,11 @@ async function loadMessages() {
         }
 
         const box = document.getElementById('messages');
+        const previousScrollTop = box.scrollTop;
+        const previousScrollHeight = box.scrollHeight;
+        const distanceFromBottom = previousScrollHeight - previousScrollTop - box.clientHeight;
+        const shouldAutoScroll = forceScrollBottom || distanceFromBottom < 80;
+
         box.innerHTML = '';
 
         data.forEach(msg => {
@@ -468,7 +475,12 @@ async function loadMessages() {
             box.appendChild(div);
         });
 
-        box.scrollTop = box.scrollHeight;
+        if (shouldAutoScroll) {
+            box.scrollTop = box.scrollHeight;
+        } else {
+            const heightDiff = box.scrollHeight - previousScrollHeight;
+            box.scrollTop = previousScrollTop + heightDiff;
+        }
     } catch (e) {
         console.error("Erro ao carregar mensagens:", e);
     }
@@ -505,7 +517,7 @@ async function sendMessage() {
 
         contentInput.value = '';
         pendingImageUrl = null;
-        await loadMessages();
+        await loadMessages({ forceScrollBottom: true });
 
         if (to) showOverlay(`Sussurro enviado para @${to}`, "success");
     } catch (e) {
@@ -594,25 +606,4 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
