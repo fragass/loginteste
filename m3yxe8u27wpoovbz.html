@@ -11,84 +11,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página inicial - Workday</title>
     <style>
-:root{
-  --bg:#0b0f14;
-  --panel:#151a21;
-  --panel-light:#1b212b;
-  --border:rgba(255,255,255,.08);
-  --text:#e6edf3;
-  --muted:#9aa4af;
-  --accent:#8a2be2;
-  --accent-glow:rgba(138,43,226,.25);
+* { box-sizing: border-box; }
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #3c2a55 #0b0f14;
 }
 
-body{
-  margin:0;
-  height:100vh;
-  background:var(--bg);
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0b0f14; }
+::-webkit-scrollbar-thumb {
+  background: #3c2a55;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b3370;
 }
 
-#chatContainer{
-  flex:1;
-  padding:20px;
-  overflow-y:auto;
+.messages::-webkit-scrollbar { width: 8px; }
+.messages::-webkit-scrollbar-track { background: #0e1218; }
+.messages::-webkit-scrollbar-thumb {
+  background: #3c2a55;
+  border-radius: 6px;
+}
+.messages::-webkit-scrollbar-thumb:hover {
+  background: #4b3370;
 }
 
-.message{
-  max-width:70%;
-  padding:10px 14px;
-  border-radius:12px;
-  margin-bottom:10px;
-  background:var(--panel);
-  border:1px solid var(--border);
+body {
+  margin: 0;
+  background: #0b0f14;
+  font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+  color: #e6edf3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
 }
 
-.message.self{
-  margin-left:auto;
-  background:var(--panel-light);
-  border-color:var(--accent);
-  box-shadow:0 0 10px var(--accent-glow);
+.online-box {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: #151a21;
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #b9c0cc;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  z-index: 1000;
 }
 
-#inputArea{
-  display:flex;
-  gap:10px;
-  padding:14px;
-  background:var(--panel);
-  border-top:1px solid var(--border);
+.container {
+  width: 700px;
+  max-width: 100%;
+  height: 700px;
+  max-height: 90vh;
+  background: #151a21;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.65);
 }
 
-#inputArea input{
-  flex:1;
-  padding:10px 12px;
-  background:#0f141b;
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--text);
+.header {
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#inputArea input:focus{
-  outline:none;
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px var(--accent-glow);
+.warning-text {
+  color: #ffffff;
 }
 
-#inputArea button{
-  padding:10px 16px;
-  background:#0f141b;
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--text);
-  cursor:pointer;
+.admin-link {
+  text-decoration: none;
+  font-size: 14px;
+  opacity: .7;
+  transition: all .2s ease;
+}
+.admin-link:hover {
+  opacity: 1;
+  transform: scale(1.05);
 }
 
-#inputArea button:hover{
-  border-color:var(--accent);
+.messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #0f141b;
 }
-    </style>
+
+.message {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: #151a21;
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: 13px;
+  transition: background .2s ease, transform .15s ease;
+}
+
+.message:hover {
+  background: #1b212b;
+  transform: translateY(-1px);
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.username {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: #9aa4af;
+}
+
+.form {
+  padding: 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  position: relative;
+  background: #151a21;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  height: 45px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #0f141b;
+  color: #e6edf3;
+  font-size: 13px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #8a2be2;
+  box-shadow: 0 0 0 2px rgba(138,43,226,.25);
+}
+
+button.send-btn {
+  padding: 0 18px;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  background: #8a2be2;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+button.send-btn:hover {
+  background: #9b3cff;
+  transform: translateY(-1px);
+}
+
+.emoji-toggle {
+  cursor: pointer;
+  font-size: 20px;
+  opacity: .75;
+  transition: all .2s ease;
+}
+.emoji-toggle:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.emoji-panel {
+  position: absolute;
+  bottom: 65px;
+  right: 90px;
+  width: 260px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #151a21;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 12px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.emoji-panel span {
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform .1s ease;
+}
+.emoji-panel span:hover {
+  transform: scale(1.3);
+}
+
+#mini-profile {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(21,26,33,.95);
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: rgba(21,26,33,.95);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.55);
+  padding: 8px 12px;
+}
+
+#dropdown-menu button {
+  background: #1b212b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#dropdown-menu button:hover {
+  background: #8a2be2;
+}
+
+.mention {
+  color: #8a2be2;
+  font-weight: 600;
+}
+
+.mention-self {
+  color: #ffd700;
+  font-weight: 700;
+}
+
+.message.whisper {
+  background: #1b1430;
+  border: 1px solid #8a2be2;
+  color: #e8def8;
+  font-style: italic;
+}
+
+.overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,.85);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+}
+
+.overlay.success { background: #22c55e; }
+.overlay.error { background: #ef4444; }
+.overlay.info { background: #1f2937; }
+</style>
 </head>
 <body>
     <div class="side-panel right-panel"></div>
@@ -420,6 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
